@@ -6,16 +6,7 @@ import java.util.stream.Stream;
 
 import static kz.pcdp.util.Util.printResults;
 
-public class Student {
-  int id;
-  boolean isCurrent;
-  double age;
-
-  Student(int id, boolean isCurrent, double age) {
-    this.id = id;
-    this.isCurrent = isCurrent;
-    this.age = age;
-  }
+public class StreamParallel {
 
   public static void main(String[] args) {
 
@@ -66,5 +57,17 @@ public class Student {
 
     long timeInNanos = System.nanoTime() - startTime;
     printResults("parStream", timeInNanos, ret);
+  }
+}
+
+class Student {
+  public int id;
+  public boolean isCurrent;
+  public double age;
+
+  public Student(int id, boolean isCurrent, double age) {
+    this.id = id;
+    this.isCurrent = isCurrent;
+    this.age = age;
   }
 }

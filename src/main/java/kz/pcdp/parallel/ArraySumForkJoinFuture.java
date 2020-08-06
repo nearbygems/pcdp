@@ -1,16 +1,16 @@
 package kz.pcdp.parallel;
 
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.RecursiveTask;
 
 import static kz.pcdp.util.Util.printResults;
 import static kz.pcdp.util.Util.seqArraySum;
 
-public class ReciprocalArraySum {
+public class ArraySumForkJoinFuture {
 
   public static void main(String[] args) {
 
-    System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "2");
+    System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "4");
 
     double[] x = new double[100000000];
 
@@ -21,28 +21,25 @@ public class ReciprocalArraySum {
     for (int i = 1; i < 6; i++) {
       System.out.println("Run " + i);
       seqArraySum(x);
-      parArraySum(x);
+      parArraySumFuture(x);
     }
   }
 
-  public static void parArraySum(double[] x) {
+  public static void parArraySumFuture(double[] x) {
     long startTime = System.nanoTime();
 
     SumArray t = new SumArray(x, 0, x.length);
-    ForkJoinPool.commonPool().invoke(t);
-
-    double sum = t.ans;
+    double sum = ForkJoinPool.commonPool().invoke(t);
 
     long timeInNanos = System.nanoTime() - startTime;
-    printResults("parArraySum", timeInNanos, sum);
+    printResults("parArraySumFuture", timeInNanos, sum);
   }
 
-  private static class SumArray extends RecursiveAction {
+  private static class SumArray extends RecursiveTask<Double> {
     static int SEQUENTIAL_THRESHOLD = 1000;
     int lo;
     int hi;
     double[] arr;
-    double ans = 0;
 
     SumArray(double[] a, int l, int h) {
       lo = l;
@@ -50,19 +47,23 @@ public class ReciprocalArraySum {
       arr = a;
     }
 
-    protected void compute() {
+    protected Double compute() {
       if (hi - lo <= SEQUENTIAL_THRESHOLD) {
+        double sum = 0;
         for (int i = lo; i < hi; ++i) {
-          ans += 1 / arr[i];
+          sum += 1 / arr[i];
         }
+        return sum;
       } else {
         SumArray left = new SumArray(arr, lo, (hi + lo) / 2);
         SumArray right = new SumArray(arr, (hi + lo) / 2, hi);
         left.fork();
-        right.compute();
-        left.join();
-        ans = left.ans + right.ans;
+        double rightSum = right.compute();
+        double leftSum = left.join();
+        return leftSum + rightSum;
+
       }
     }
   }
+
 }
