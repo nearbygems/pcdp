@@ -62,6 +62,6 @@ public class ArraySumAsyncFinish {
     double sum = sum1 + sum2;
 
     long timeInNanos = System.nanoTime() - startTime;
-    printResults("seqArraySum", timeInNanos, sum);
+    printResults("parArraySum", timeInNanos, sum);
   }
 }

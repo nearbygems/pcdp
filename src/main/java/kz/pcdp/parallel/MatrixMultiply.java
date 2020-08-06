@@ -1,7 +1,6 @@
 package kz.pcdp.parallel;
 
-import static edu.rice.pcdp.PCDP.forall2dChunked;
-import static edu.rice.pcdp.PCDP.forseq2d;
+import static edu.rice.pcdp.PCDP.*;
 import static kz.pcdp.util.Util.printResults;
 
 public class MatrixMultiply {

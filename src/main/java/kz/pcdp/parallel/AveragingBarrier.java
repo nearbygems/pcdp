@@ -1,6 +1,6 @@
 package kz.pcdp.parallel;
 
-import static edu.rice.pcdp.PCDP.forall;
+import static edu.rice.pcdp.PCDP.*;
 
 public class AveragingBarrier {
 
