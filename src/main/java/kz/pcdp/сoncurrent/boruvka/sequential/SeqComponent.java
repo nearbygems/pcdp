@@ -63,7 +63,6 @@ public final class SeqComponent extends Component<SeqComponent> {
     int i = 0;
     int j = 0;
     while (i + j < edges.size() + other.edges.size()) {
-      // get rid of inter-component edges
       while (i < edges.size()) {
         final Edge e = edges.get(i);
         if ((e.fromComponent() != this && e.fromComponent() != other)

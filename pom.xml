@@ -26,6 +26,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.10</artifactId>
+            <version>[2.2.0,)</version>
+        </dependency>
+        <dependency>
             <groupId>edu.rice.pcdp</groupId>
             <artifactId>pcdp-core</artifactId>
             <version>${pcdp.version}</version>
